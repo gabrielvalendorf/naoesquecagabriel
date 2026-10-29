@@ -1,5 +1,6 @@
 package com.naoesqueca.naoesqueca.api.controller;
 
+import com.naoesqueca.naoesqueca.api.exeption.ResourceNotFoundException;
 import com.naoesqueca.naoesqueca.api.model.Lembrete;
 import com.naoesqueca.naoesqueca.api.model.Status;
 import org.springframework.http.HttpStatus;
@@ -92,7 +93,15 @@ public class LembreteController {
 
 
 
+    private Lembrete obterLembreteOuLancarExcecao(Long id) {
+        for (Lembrete l : lembretes) {
+            if (l.getId().equals(id)) {
+                return l;
+            }
+        }
 
+        throw new ResourceNotFoundException.resourceNotFoundException("Lembrete não encontrado com ID: " + id);
+    }
 
 }
 
