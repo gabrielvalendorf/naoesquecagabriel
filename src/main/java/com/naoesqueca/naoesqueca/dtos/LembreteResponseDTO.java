@@ -10,13 +10,12 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-public class LembreteResponseDTO {
 
-    @Getter
+@Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LembreteResponseDTO {
+ public class LembreteResponseDTO {
 
     private Long id;
     private String titulo;
@@ -43,4 +42,4 @@ public class LembreteResponseDTO {
         );
     }
 }
-}
+
