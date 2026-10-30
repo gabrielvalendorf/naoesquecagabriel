@@ -36,6 +36,6 @@ public interface LembreteRepository extends JpaRepository<Lembrete, Long> {
     List<Lembrete> buscarOrdenadosPorData(
             @Param("status") Status status,
             @Param("prioridade") Prioridade prioridade);
-}
 
+}
 

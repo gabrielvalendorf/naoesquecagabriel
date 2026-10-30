@@ -3,6 +3,7 @@ package com.naoesqueca.naoesqueca.api.service;
 
 import com.naoesqueca.naoesqueca.api.exeption.ResourceNotFoundException;
 import com.naoesqueca.naoesqueca.api.model.Lembrete;
+import com.naoesqueca.naoesqueca.api.model.Prioridade;
 import com.naoesqueca.naoesqueca.api.model.Status;
 import com.naoesqueca.naoesqueca.dtos.LembreteRequestDTO;
 import com.naoesqueca.naoesqueca.dtos.LembreteResponseDTO;
@@ -47,6 +48,35 @@ public class LembreteService {
         }
 
         return dtos;
+    }
+
+    public List<LembreteResponseDTO> listarComFiltros(Status status, Prioridade prioridade) {
+        List<Lembrete> lembretes;
+        if (status != null && prioridade != null) {
+            lembretes = lembreteRepository.findByStatusAndPrioridade(status, prioridade);
+        } else if (status != null) {
+            lembretes = lembreteRepository.findByStatus(status);
+        } else if (prioridade != null) {
+            lembretes = lembreteRepository.findByPrioridade(prioridade);
+        } else {
+            lembretes = lembreteRepository.findAll();
+        }
+        return lembretes.stream().map(LembreteResponseDTO::fromEntity).toList();
+    }
+
+    public List<LembreteResponseDTO> buscarPorPeriodo(LocalDateTime inicio, LocalDateTime fim) {
+        return lembreteRepository.findByDataHoraBetween(inicio, fim).stream()
+                .map(LembreteResponseDTO::fromEntity).toList();
+    }
+
+    public List<LembreteResponseDTO> listarAtrasados() {
+        return lembreteRepository.findByStatusAndDataHoraBefore(Status.PENDENTE, LocalDateTime.now()).stream()
+                .map(LembreteResponseDTO::fromEntity).toList();
+    }
+
+    @Transactional
+    public void excluir(Long id) {
+        lembreteRepository.delete(obterEntidadePorId(id));
     }
 
     public LembreteResponseDTO buscarPorId(Long id) {
