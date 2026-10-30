@@ -1,10 +1,8 @@
 package com.naoesqueca.naoesqueca.api.exeption;
 
-public class ResourceNotFoundException {
+public class ResourceNotFoundException extends RuntimeException {
 
-    public static class resourceNotFoundException extends RuntimeException {
-        public resourceNotFoundException(String message) {
-            super(message);
-        }
+    public ResourceNotFoundException(String message) {
+        super(message);
     }
 }

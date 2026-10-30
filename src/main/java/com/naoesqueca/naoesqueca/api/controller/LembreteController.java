@@ -100,7 +100,7 @@ public class LembreteController {
             }
         }
 
-        throw new ResourceNotFoundException.resourceNotFoundException("Lembrete não encontrado com ID: " + id);
+        throw new ResourceNotFoundException("Lembrete não encontrado com ID: " + id);
     }
 
 }
